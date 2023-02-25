@@ -13,7 +13,7 @@ https://leetcode.cn/problems/letter-combinations-of-a-phone-number/description/
 var digitsMap = []string{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"}
 
 func letterCombinations(digits string) []string {
-	if len(digits) == 0 {
+	if len(digits) == 0 { // 不这么写会把那个空path加入到res中
 		return []string{}
 	}
 	var res = []string{}
