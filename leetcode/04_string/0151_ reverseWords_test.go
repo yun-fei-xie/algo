@@ -8,7 +8,7 @@ import (
 
 /*
 https://leetcode.cn/problems/reverse-words-in-a-string/description/
-
+这个题目比较麻烦的是，在s中，单词与单词之间的空格可能会有多个。
 调用了库函数
 对于strings的切割函数 返回值有点奇怪
 */

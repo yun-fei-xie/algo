@@ -1,21 +1,24 @@
-package _4_string
+# 剑指 Offer 05. 替换空格
 
-import (
-	"fmt"
-	"strings"
-	"testing"
-)
-
-/*
 https://leetcode.cn/problems/ti-huan-kong-ge-lcof/
-如何识别宫格字符
-*/
+
+
+## 解题思路
+
+1. 识别空格
+2. 替换成需要替换的字符
+
+
+
+## 解题代码
+
+```go
 
 func replaceSpace(s string) string {
 	b := []byte(s)
 	sb := strings.Builder{}
 	for i := 0; i < len(b); i++ {
-		if b[i] == ' ' { // 识别空格字符
+		if b[i] == ' ' {  // 识别空格
 			sb.WriteString("%20")
 		} else {
 			sb.WriteByte(b[i])
@@ -24,8 +27,6 @@ func replaceSpace(s string) string {
 	return sb.String()
 }
 
-func TestReplaceSpace(t *testing.T) {
-	s := "We are happy."
-	res := replaceSpace(s)
-	fmt.Println(res)
-}
+
+
+```
