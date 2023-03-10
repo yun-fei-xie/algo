@@ -7,6 +7,13 @@ import (
 
 /*
 https://leetcode.cn/problems/implement-queue-using-stacks/description/
+
+用栈实现队列，需要思考两个方面，入队、出队。
+栈是先入后出、队列是先入先出。
+如果使用栈实现先入先出的功能，那么需要使用两个栈。
+
+当需要进行出队操作时，如果第二栈为空，那么将第一个栈中的全部元素逐个pop出来，放入到第二个栈中。
+这样经过两次入栈操作，会得到负负得正的效果。
 */
 
 type MyQueue struct {
