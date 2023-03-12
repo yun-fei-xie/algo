@@ -11,6 +11,18 @@ import (
 https://leetcode.cn/problems/evaluate-reverse-polish-notation/
 
 逆波兰表达式求值
+输入：tokens = ["2","1","+","3","*"]
+输出：9
+解释：该算式转化为常见的中缀算术表达式为：((2 + 1) * 3) = 9
+
+解题思路：
+如果是运算数，则将其压入栈中。
+如果是操作符，则从栈中弹出两个元素。calculateVal = val2.Value.(int) / val1.Value.(int)
+注意计算的顺序。
+然后将计算的结果再次压入栈中。
+
+
+
 */
 
 func evalRPN(tokens []string) int {
