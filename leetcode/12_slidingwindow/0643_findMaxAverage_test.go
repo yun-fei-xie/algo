@@ -1,4 +1,4 @@
-package _5_doublePointer
+package _2_slidingwindow
 
 import (
 	"fmt"
@@ -21,7 +21,7 @@ func findMaxAverage(nums []int, k int) float64 {
 	maxSum = sum
 
 	for right+1 < len(nums) {
-		sum = sum + nums[right+1] - nums[left]
+		sum = sum + nums[right+1] - nums[left] // 滚动连续区间求和
 		if sum > maxSum {
 			maxSum = sum
 		}

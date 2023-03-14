@@ -24,6 +24,11 @@ func replaceSpace(s string) string {
 	return sb.String()
 }
 
+// 使用库函数
+func replaceSpace2(s string) string {
+	return strings.ReplaceAll(s, " ", "%20")
+}
+
 func TestReplaceSpace(t *testing.T) {
 	s := "We are happy."
 	res := replaceSpace(s)
