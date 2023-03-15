@@ -10,6 +10,9 @@ https://leetcode.cn/problems/find-largest-value-in-each-tree-row/
 
 给定一棵二叉树的根节点 root ，请找出该二叉树中每一层的最大值。
 
+
+解法: 层序遍历中，内层循环每一轮会遍历一层，在这一轮中拿到最大值
+
 */
 
 func largestValues(root *TreeNode) []int {

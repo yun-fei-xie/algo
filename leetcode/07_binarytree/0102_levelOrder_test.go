@@ -3,7 +3,10 @@ package _7_binarytree
 import "container/list"
 
 /*
- */
+https://leetcode.cn/problems/binary-tree-level-order-traversal/
+
+二叉树的层序遍历
+*/
 func levelOrder(root *TreeNode) [][]int {
 
 	values := make([][]int, 0)
@@ -46,8 +49,8 @@ func levelOrderRec(root *TreeNode) [][]int {
 
 	values := [][]int{}
 	depth := 0
-	var levelorder func(node *TreeNode, depth int)
-	levelorder = func(node *TreeNode, depth int) {
+	var levelOrder func(node *TreeNode, depth int)
+	levelOrder = func(node *TreeNode, depth int) {
 		if node == nil {
 			return
 		}
@@ -55,10 +58,10 @@ func levelOrderRec(root *TreeNode) [][]int {
 			values = append(values, []int{})
 		}
 		values[depth] = append(values[depth], node.Val)
-		levelorder(node.Left, depth+1)
-		levelorder(node.Right, depth+1)
+		levelOrder(node.Left, depth+1)
+		levelOrder(node.Right, depth+1)
 	}
-	levelorder(root, depth)
+	levelOrder(root, depth)
 
 	return values
 }

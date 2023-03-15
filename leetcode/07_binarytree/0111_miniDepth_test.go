@@ -8,12 +8,49 @@ https://leetcode.cn/problems/minimum-depth-of-binary-tree/description/
 最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
 说明：叶子节点是指没有子节点的节点。
 
-在层序遍历的时候，如果一个节点的左右节点都是空，那么就找到了一个最小深度
+解法：
+1. 首先可以想到使用深度优先搜索的方法，遍历整棵树，记录最小深度。
+对于每一个非叶子节点，我们只需要分别计算其左右子树的最小叶子节点深度。这样就将一个大问题转化为了小问题，可以递归地解决该问题。
+递归写法需要考虑链表那种情况，不然很容易写出错误的代码
+
+2.层序遍历
+在层序遍历的时候，由于是自顶向下进行遍历。
+因此，第一个被发现的叶子节点所在的深度就是最小深度。
 */
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
 	Right *TreeNode
+}
+
+func minDepthRec(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+
+	var min func(i, j int) int
+	min = func(i, j int) int {
+		if i < j {
+			return i
+		}
+		return j
+	}
+	var dfs func(node *TreeNode) int
+
+	dfs = func(node *TreeNode) int {
+		if node.Left == nil && node.Right == nil {
+			return 1
+		}
+		if node.Left == nil && node.Right != nil {
+			return dfs(node.Right) + 1
+		}
+		if node.Right == nil && node.Left != nil {
+			return dfs(node.Left) + 1
+		}
+
+		return min(dfs(node.Left), dfs(node.Right)) + 1
+	}
+	return dfs(root)
 }
 
 func minDepth(root *TreeNode) int {

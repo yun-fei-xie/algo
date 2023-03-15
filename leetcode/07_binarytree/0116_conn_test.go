@@ -4,6 +4,11 @@ package _7_binarytree
 https://leetcode.cn/problems/populating-next-right-pointers-in-each-node/
 
 填充每个节点的下一个右侧节点指针
+
+解法：先使用层序遍历收集节点，每一层放到一个数组中。
+最后把每一层的节点取出，进行串联。
+
+
 */
 
 //type Node struct {

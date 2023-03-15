@@ -11,6 +11,10 @@ package _7_binarytree
 /*
 https://leetcode.cn/problems/average-of-levels-in-binary-tree/description/
 
+给定一个非空二叉树的根节点 root , 以数组的形式返回每一层节点的平均值。与实际答案相差 10-5 以内的答案可以被接受。
+
+解法：层序遍历将同一层的元素放入到同一个数组中，最后对每一个数组求解平均值。
+
 */
 func averageOfLevels(root *TreeNode) []float64 {
 
