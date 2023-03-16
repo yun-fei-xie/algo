@@ -47,7 +47,7 @@ func subarraySum1(nums []int, k int) int {
 /*
 前缀数组
 [j...i] 这个段区间的和等于 prefix[i] - prefix[j-1] (这里注意是j-1)
-这个题有点两数之和，使用hashmap进行速度优化的感觉。
+这个题有点两数之和，使用hashmap进行速度优化的感觉。 在处理当前位置的元素时，希望知道前面有哪些前缀和为目标值。
 参考题解：https://leetcode.cn/problems/subarray-sum-equals-k/solutions/238572/he-wei-kde-zi-shu-zu-by-leetcode-solution/
 */
 

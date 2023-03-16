@@ -1,5 +1,10 @@
 package mid
 
+import (
+	"fmt"
+	"testing"
+)
+
 /*
 https://leetcode.cn/problems/find-the-duplicate-number/?favorite=2cktkvj
 
@@ -8,14 +13,37 @@ https://leetcode.cn/problems/find-the-duplicate-number/?favorite=2cktkvj
 你设计的解决方案必须 不修改 数组 nums 且只用常量级 O(1) 的额外空间。
 
 
+输入：nums = [1,3,4,2,2]
+输出：2
+
 如果允许使用额外的空间，非常容易。
 但是不允许使用额外的空间
 
+理解题意：n + 1 个整数，放在长度为 n 的数组里，根据「抽屉原理」，**至少**会有 1 个整数是重复的；
+
+
 解题思路：
+
+暴力解法：
+双重循环 , 时间复杂度为O(n^2) 空间复杂度为O(1)
+
+哈希表,时间复杂度为O(n) ，空间复杂度
+
+
+
 1. 二分搜索
 
+arr = [1,3,4,2,2]
+计算小于等于nums[i]的元素个数
+nums -> 1, 2, 3 , 4
+cnt  -> 1, 3, 4 , 4
 
+重复元素满足 cnt[i]>i  图中的cnt[2] > 2 ( cnt[2] = 3)
 
+「二分查找」的思路是先猜一个数（搜索范围 [left..right] 里位于中间的数 mid），然后统计原始数组中 小于等于 mid 的元素的个数 count：
+
+如果 count 严格大于 mid。根据 抽屉原理，重复元素就在区间 [left..mid] 里；
+否则，重复元素可以在区间 [mid + 1..right] 里找到，其实只要第 1 点是对的，这里肯定是对的，但要说明这一点，需要一些推导，我们放在最后说。
 
 2. 使用环形链表II的方法解题（142.环形链表II），使用 142 题的思想来解决此题的关键是要理解如何将输入的数组看作为链表。 首先明确前提，整数的数组 nums 中的数字范围是 [1,n]。考虑一下两种情况：
 如果数组中没有重复的数，以数组 [1,3,4,2]为例，我们将数组下标 n 和数 nums[n] 建立一个映射关系 f(n)f(n)f(n)， 其映射关系 n->f(n)为： 0->1 1->3 2->4 3->2 我们从下标为 0 出发，根据 f(n)f(n)f(n) 计算出一个值，以这个值为新的下标，再用这个函数计算，以此类推，直到下标超界。这样可以产生一个类似链表一样的序列。 0->1->3->2->4->null
@@ -24,8 +52,34 @@ https://leetcode.cn/problems/find-the-duplicate-number/?favorite=2cktkvj
 */
 
 func findDuplicate(nums []int) int {
-	var res = -1
+	left, right := 1, len(nums)-1
+	for left < right {
+		mid := (left + right) >> 1
+		count := 0
+		for i := 0; i < len(nums); i++ {
+			if nums[i] <= mid {
+				count++
+			}
+		}
 
-	return res
+		if count > mid {
+			right = mid
+		} else {
+			left = mid + 1
+		}
+	}
 
+	return left
+}
+
+/*
+遍历原数组，统计 <= mid 的元素个数，记为 k。
+如果k > mid，说明有超过 mid 个数落在[1, mid]，但该区间只有 mid 个“坑”，说明重复的数落在[1, mid]。
+相反，如果k <= mid，则说明重复数落在[mid + 1, n]。
+对重复数所在的区间继续二分，直到区间闭合，重复数就找到了。
+*/
+func TestFindDuplicate(t *testing.T) {
+	fmt.Println(findDuplicate([]int{1, 3, 4, 2, 2}))
+	fmt.Println(findDuplicate([]int{3, 4, 3, 1, 2}))
+	//fmt.Println(findDuplicate([]int{2, 2, 3, 4, 5})) // 错误的测试用例->不符合题目要求 数字的范围应该在[1,4]
 }

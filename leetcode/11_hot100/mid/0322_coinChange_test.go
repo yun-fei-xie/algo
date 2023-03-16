@@ -2,6 +2,7 @@ package mid
 
 import (
 	"fmt"
+	"math"
 	"sort"
 	"testing"
 )
@@ -20,7 +21,42 @@ https://leetcode.cn/problems/coin-change/?favorite=2cktkvj
 
 思路：
 1.贪心算法 先兑换面值大的 (贪心不行) 因为兑换完大面额的，可会会出现无解
-2.暴力枚举
+2.暴力枚举，当然，每一个面值的枚举的数量都有一个上限。这个上限就是当前余额amount 除以 当前硬币的面值，就得到一个最大的枚举数量
+暴力枚举会超时。 是否可以进行优化->记忆化搜索
+3.记忆化搜索？
+
+
+
+*/
+
+func coinChange2(coins []int, amount int) int {
+	var res = math.MaxInt64
+	var dfs func(coinIndex int, remainValue int, coinAmount int)
+	dfs = func(coinIndex int, remainValue int, coinAmount int) {
+		if coinIndex >= len(coins) || remainValue == 0 {
+			if remainValue == 0 && coinAmount < res { // 找到了一个解
+				res = coinAmount
+			}
+			return
+		}
+
+		// 一枚一枚地尝试
+		// i -> [0...remainValue/coinValue]  i表示本次使用的硬币的枚数
+		for i := 0; i <= remainValue/coins[coinIndex]; i++ {
+			dfs(coinIndex+1, remainValue-i*coins[coinIndex], coinAmount+i)
+		}
+
+	}
+
+	dfs(0, amount, 0)
+	if res != math.MaxInt64 {
+		return res
+	}
+	return -1
+}
+
+/*
+错误解法: 这个题不能用贪心算法
 */
 func coinChange(coins []int, amount int) int {
 	res := 0
@@ -60,5 +96,6 @@ func TestCoinChange(t *testing.T) {
 	//fmt.Println(coinChange([]int{1, 2, 5}, 11))
 	//fmt.Println(coinChange([]int{2}, 3))
 	//fmt.Println(coinChange([]int{1}, 0))
-	fmt.Println(coinChange([]int{186, 419, 83, 408}, 6249))
+	fmt.Println(coinChange2([]int{186, 419, 83, 408}, 6249))
+	fmt.Println(coinChange2([]int{411, 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 422}, 9864))
 }
