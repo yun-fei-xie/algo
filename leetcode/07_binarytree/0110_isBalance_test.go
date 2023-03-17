@@ -11,7 +11,13 @@ package _7_binarytree
 /*
 https://leetcode.cn/problems/balanced-binary-tree/description/
 
-本质是求高度，不过感觉代码有些冗余
+判断一颗二叉树是否是平衡二叉树
+1. 左子树是平衡的二叉树
+2. 右子树是平衡的二叉树
+3. 以当前节点为根的二叉树是平衡的二叉树
+
+需要使用高度进行判断
+
 */
 func isBalanced(root *TreeNode) bool {
 	if root == nil {
