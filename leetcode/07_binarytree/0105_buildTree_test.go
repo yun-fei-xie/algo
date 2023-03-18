@@ -2,8 +2,12 @@ package _7_binarytree
 
 /*
 https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
-最重要的就是确认下标
-如果思路没问题的情况下出错，使用小数据量检查下标
+
+从前序和中序遍历构造二叉树
+
+解法：前序可以确定根节点，然后用前序中的根节点的位置在中序数组中进行左右子树的划分。
+在前序中找到根节点的值后，需要在中序数组中找到这个值的index。为了不需要每次都进行遍历，提前用一个map把inorder中的索引保存起来。
+
 */
 
 var hashM = make(map[int]int)

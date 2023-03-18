@@ -15,6 +15,18 @@ import (
  */
 
 /*
+
+https://leetcode.cn/problems/path-sum-ii/
+
+给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。
+叶子节点 是指没有子节点的节点。
+
+解法：
+和112相比，要求返回所有可能的路径。
+
+
+
+
 有很多点需要注意：
 1.slice的指针传递修改数组
 2.回溯过程中的路径删除
@@ -31,7 +43,7 @@ func pathSumAux(node *TreeNode, target int, path *[]int, result *[][]int) {
 	if node == nil {
 		return
 	}
-	if node.Left == nil && node.Right == nil {
+	if node.Left == nil && node.Right == nil { // 到达叶子节点
 
 		curTarget := target - node.Val
 		*path = append(*path, node.Val)
@@ -49,7 +61,7 @@ func pathSumAux(node *TreeNode, target int, path *[]int, result *[][]int) {
 
 	if node.Left != nil {
 		pathSumAux(node.Left, curTarget, path, result)
-		*path = (*path)[:len(*path)-1]
+		*path = (*path)[:len(*path)-1] // 回退到上一层，记得退栈
 	}
 
 	if node.Right != nil {

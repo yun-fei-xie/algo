@@ -1,9 +1,11 @@
 package _7_binarytree
 
 /*
+https://leetcode.cn/problems/construct-binary-tree-from-inorder-and-postorder-traversal/description/
+
 中序+后序 还原二叉树
 
-https://leetcode.cn/problems/construct-binary-tree-from-inorder-and-postorder-traversal/description/
+和105题的本质一样。
 */
 var hashMap = make(map[int]int, 0)
 
