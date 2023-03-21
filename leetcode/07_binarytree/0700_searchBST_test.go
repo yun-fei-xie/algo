@@ -11,7 +11,7 @@ package _7_binarytree
 /*
 https://leetcode.cn/problems/search-in-a-binary-search-tree/description/
 
-在二叉搜索树中搜索一个元素
+二叉树搜索树的搜索
 
 */
 func searchBST(root *TreeNode, val int) *TreeNode {
