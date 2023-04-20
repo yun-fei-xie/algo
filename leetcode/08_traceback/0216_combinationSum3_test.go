@@ -13,36 +13,34 @@ https://leetcode.cn/problems/combination-sum-iii/description/
 返回 所有可能的有效组合的列表 。该列表不能包含相同的组合两次，组合可以以任何顺序返回。
 */
 func combinationSum3(k int, n int) [][]int {
-	var res = [][]int{}
-	var path = []int{}
+	var ans [][]int
+	var path []int
 
-	var dfs func(startIndex int, sum int)
-	dfs = func(startIndex int, sum int) {
-		if len(path) == k {
-			if sum == n {
-				var temp = make([]int, len(path)) // 必须显示申明长度，不然没法copy
-				copy(temp, path)
-				res = append(res, temp)
-			}
+	var traceBack func(startNumber int, depth int, sum int)
+	traceBack = func(startNumber int, depth int, sum int) {
+		//if depth > k || sum > n {
+		//	return
+		//}
+		if depth == k && sum == n {
+			temp := make([]int, k)
+			copy(temp, path)
+			ans = append(ans, temp)
 			return
 		}
 
-		//if sum > n { // 剪枝的条件之一  放在for循环里面，如果满足这个条件，不需要进入递归
-		//	return
-		//}
-
-		for i := startIndex; i <= 9; i++ {
-			if sum+i > n { // 剪枝操作
-				break
+		for i := startNumber; i <= 9; i++ {
+			if depth+1 > k || sum+i > n { // 剪枝
+				continue
 			}
+
 			path = append(path, i)
-			dfs(i+1, sum+i)
+			traceBack(i+1, depth+1, sum+i)
 			path = path[:len(path)-1]
 		}
 
 	}
-	dfs(1, 0)
-	return res
+	traceBack(1, 0, 0)
+	return ans
 }
 
 func TestCombinationSum3(t *testing.T) {

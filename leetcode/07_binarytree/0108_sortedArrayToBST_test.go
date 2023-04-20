@@ -13,13 +13,13 @@ package _7_binarytree
 https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/description/
 */
 
-var m = make(map[int]int)
+//var m = make(map[int]int)
 
 func sortedArrayToBST(nums []int) *TreeNode {
 
-	for index, num := range nums {
-		m[num] = index
-	}
+	//for index, num := range nums {
+	//	m[num] = index
+	//}
 
 	var arrayToBstAux func(nums []int, left, right int) *TreeNode
 

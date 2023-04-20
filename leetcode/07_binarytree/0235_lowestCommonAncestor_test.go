@@ -10,6 +10,7 @@ package _7_binarytree
  */
 /*
 https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/description/
+二叉搜索树的最近公共祖先
 如果当前节点的值比p、q都小 那么应该去当前节点的右子树中进行搜索
 */
 func lowestCommonAncestorBST(root, p, q *TreeNode) *TreeNode {

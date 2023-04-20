@@ -13,48 +13,46 @@ n层递归
 */
 
 func solveNQueens(n int) [][]string {
+	var ans [][]string
+	var position []int
+	row := make([]int, n)
+	col := make([]int, n)
+	pie := make([]int, 2*n-1)
+	na := make([]int, 2*n-1)
 
-	res := make([][]string, 0)
-	position := make([]int, 0) // 存放路径
-
-	row := make([]bool, n)
-	col := make([]bool, n)
-	dail1 := make([]bool, 2*n-1) // pie 2*n-1 而不是2*(n-1)
-	dail2 := make([]bool, 2*n-1) // nai
-
-	var putQueue func(index int) // index 表示行号
-	putQueue = func(index int) {
-		if index == n {
-			res = append(res, generate(position, n))
+	var putQueue func(depth int)
+	putQueue = func(depth int) {
+		if depth >= n {
+			solve := generate(position, n)
+			ans = append(ans, solve)
 			return
 		}
 
-		for i := 0; i < n; i++ { //i表示列号
-			if !row[i] && !col[i] && !dail1[index+i] && !dail2[index-i+n-1] {
-				row[i] = true
-				col[i] = true
-				dail1[index+i] = true
-				dail2[index-i+n-1] = true
+		for i := 0; i < n; i++ { // 尝试在depth这一行上放置一枚皇后，坐标为（depth , i）
+			if row[depth] == 0 && col[i] == 0 && pie[depth+i] == 0 && na[depth-i+n-1] == 0 { //可以放
+				row[depth] = 1
+				col[i] = 1
+				pie[depth+i] = 1
+				na[depth-i+n-1] = 1
 
 				position = append(position, i)
-				putQueue(index + 1)
+				putQueue(depth + 1)
 				position = position[:len(position)-1]
 
-				row[i] = false
-				col[i] = false
-				dail1[index+i] = false
-				dail2[index-i+n-1] = false
+				row[depth] = 0
+				col[i] = 0
+				pie[depth+i] = 0
+				na[depth-i+n-1] = 0
 			}
 		}
 	}
-
 	putQueue(0)
+	return ans
 
-	return res
 }
 func generate(position []int, n int) []string {
-	res := make([]string, 0)
-	for i := 0; i < len(position); i++ {
+	var res []string
+	for i, l := 0, len(position); i < l; i++ {
 		sb := strings.Builder{}
 		for j := 0; j < n; j++ {
 			if j != position[i] {

@@ -13,6 +13,32 @@ https://leetcode.cn/problems/combinations/description/
 
 本质是一个树形问题
 */
+func combine2(n int, k int) [][]int {
+
+	var ans [][]int
+	var path []int
+	var traceBack func(startNumber int, depth int)
+	traceBack = func(startNumber, depth int) {
+		if depth == k {
+			temp := make([]int, depth)
+			copy(temp, path)
+			ans = append(ans, temp)
+			return
+		}
+
+		for i := startNumber; i <= n; i++ {
+			if n-startNumber+1+depth < k {
+				return
+			}
+			path = append(path, i)
+			traceBack(i+1, depth+1)
+			path = path[:len(path)-1]
+		}
+	}
+
+	traceBack(1, 0)
+	return ans
+}
 
 func combine(n int, k int) [][]int {
 	var nums []int
@@ -48,6 +74,8 @@ func combine(n int, k int) [][]int {
 func TestCombine(t *testing.T) {
 	n, k := 4, 2
 	res := combine(n, k)
+	res2 := combine2(n, k)
 	fmt.Println(res)
+	fmt.Println(res2)
 
 }

@@ -35,9 +35,9 @@ func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 		// 三种情况
 		if left != nil && right != nil { // 1.左右都不为空，自底向上看的话，当前节点就是最小公共祖先
 			return node
-		} else if left != nil {
+		} else if left != nil { // left 不为空 right为空
 			return left
-		} else if right != nil {
+		} else if right != nil { // left 不为空 right 为空
 			return right
 		}
 		return nil

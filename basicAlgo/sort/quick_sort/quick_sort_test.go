@@ -5,6 +5,12 @@ import (
 	"testing"
 )
 
+/*
+快速排序是一种不稳定的排序算法
+
+
+*/
+
 type QuickSort struct {
 }
 

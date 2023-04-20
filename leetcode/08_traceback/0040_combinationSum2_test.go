@@ -10,41 +10,39 @@ import (
 这个题结果容易重复，是因为数组中本身有重复的元素,但是又要求不能有重复的"组合" [2,1,2]和[2,2,1]重复
 树层重复 和 树枝重复 。从根节点一路下来是数枝）
 https://leetcode.cn/problems/combination-sum-ii/description/
+
+[10,1,2,7,6,1,5]-> [1,1,2,5,6,7,10]
 */
 func combinationSum2(candidates []int, target int) [][]int {
-	sort.Ints(candidates) // 必须先排序 保证
-	var res = [][]int{}
-	var path = []int{}
-	var used = make([]int, len(candidates))
 
-	var dfs func(arr []int, startIndex int, sum int)
-	dfs = func(arr []int, startIndex int, sum int) {
-		if sum >= target {
-			if sum == target {
-				temp := make([]int, len(path))
-				copy(temp, path)
-				res = append(res, temp)
-			}
+	sort.Ints(candidates)
+	var used = make([]bool, len(candidates))
+	var ans [][]int
+	var path []int
+
+	var traceback func(startIndex int, sum int)
+	traceback = func(startIndex int, sum int) {
+		if sum == target {
+			temp := make([]int, len(path))
+			copy(temp, path)
+			ans = append(ans, temp)
 			return
 		}
-
-		for i := startIndex; i < len(arr); i++ {
-
-			if i > 0 && arr[i] == arr[i-1] && used[i-1] == 0 {
+		for i := startIndex; i < len(candidates) && candidates[i]+sum <= target; i++ {
+			if i != 0 && candidates[i] == candidates[i-1] && used[i-1] == false {
 				continue
 			}
-
-			path = append(path, arr[i])
-
-			used[i] = 1
-			dfs(arr, i+1, sum+arr[i])
-			used[i] = 0
-
+			path = append(path, candidates[i])
+			used[i] = true
+			traceback(i+1, sum+candidates[i])
+			used[i] = false
 			path = path[:len(path)-1]
 		}
 	}
-	dfs(candidates, 0, 0)
-	return res
+
+	traceback(0, 0)
+	return ans
+
 }
 
 func TestCombinationSum2(t *testing.T) {

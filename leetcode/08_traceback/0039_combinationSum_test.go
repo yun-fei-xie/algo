@@ -2,6 +2,7 @@ package _8_traceback
 
 import (
 	"fmt"
+	"sort"
 	"testing"
 )
 
@@ -13,31 +14,30 @@ https://leetcode.cn/problems/combination-sum/
 40题是有重复的数组
 */
 func combinationSum(candidates []int, target int) [][]int {
-
-	var res = [][]int{}
-	var path = []int{}
-	// 递归终止 sum > target
-
-	var dfs func(arr []int, startIndex int, sum int)
-
-	dfs = func(arr []int, startIndex int, sum int) {
+	var ans [][]int
+	var path []int
+	sort.Ints(candidates) // 排序
+	var traceback func(startIndex int, sum int)
+	traceback = func(startIndex int, sum int) {
 		if sum >= target {
 			if sum == target {
 				temp := make([]int, len(path))
 				copy(temp, path)
-				res = append(res, temp)
+				ans = append(ans, temp)
 			}
 			return
 		}
 
-		for i := startIndex; i < len(arr); i++ {
-			path = append(path, arr[i])
-			dfs(arr, i, sum+arr[i])
+		for i := startIndex; i < len(candidates) && sum+candidates[i] <= target; i++ {
+
+			path = append(path, candidates[i])
+			traceback(i, sum+candidates[i])
 			path = path[:len(path)-1]
 		}
+
 	}
-	dfs(candidates, 0, 0)
-	return res
+	traceback(0, 0)
+	return ans
 }
 
 func TestCombinationSum(t *testing.T) {
