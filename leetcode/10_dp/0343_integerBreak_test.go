@@ -2,6 +2,7 @@ package _0_dp
 
 import (
 	"fmt"
+	"math"
 	"testing"
 )
 
@@ -13,6 +14,23 @@ https://leetcode.cn/problems/integer-break/description/
 
 怎么分呢？比如n=4 (3+? 2+? 1+? ) ？号处再次进行递归
 */
+func integerBreak0(n int) int {
+
+	var traceback func(num int) int
+	traceback = func(num int) int {
+		if num == 1 {
+			return 1
+		}
+		// num -> i与num-i i最大为num-1
+		max := math.MinInt
+		for i := 1; i < num; i++ {
+			max = max3(max, i*(num-i), i*traceback(num-i))
+		}
+		return max
+	}
+	return traceback(n)
+}
+
 func integerBreak(n int) int {
 	mem := make([]int, n+1) // 记忆化搜索
 	// 递归终止条件 n==1
@@ -54,16 +72,17 @@ func integerBreak2(n int) int {
 	mem := make([]int, n+1) // mem[i] -> i经过分割后的最大值
 	mem[1] = 1
 
-	for i := 2; i <= n; i++ {
+	for i := 2; i <= n; i++ { //i表示当前待拆分的数字
 		for j := 1; j <= i-1; j++ {
 			// 两个部分j*(i-j)  或者继续分割（i-j）
-			mem[i] = max3(mem[i], j*(i-j), mem[i-j])
+			mem[i] = max3(mem[i], j*(i-j), j*mem[i-j])
 		}
 	}
 	return mem[n]
 }
 
 func TestIntegerBreak(t *testing.T) {
+	fmt.Println(integerBreak0(10))
 	fmt.Println(integerBreak(10))
 	fmt.Println(integerBreak2(10))
 

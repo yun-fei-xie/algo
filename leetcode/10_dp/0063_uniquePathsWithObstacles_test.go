@@ -14,9 +14,12 @@ import (
 障碍物那一格的mem为0 表示此路不通
 
 对于最下行与最右列 需要特殊处理（如果前方有障碍物，障碍物后面的部分肯定过不去）
-
+有障碍的话，其实就是标记对应的dp table（dp数组）保持初始值(0)就可以了。
 */
 
+/*
+动态规划
+*/
 func uniquePathsWithObstacles(obstacleGrid [][]int) int {
 	mem := make([][]int, 0)
 	m := len(obstacleGrid)
@@ -64,7 +67,29 @@ func uniquePathsWithObstacles(obstacleGrid [][]int) int {
 
 }
 
+/*
+递归模式
+*/
+func uniquePathsWithObstaclesRec(obstacleGrid [][]int) int {
+	var m = len(obstacleGrid)
+	var n = len(obstacleGrid[0])
+	var traceback func(x, y int) int
+	traceback = func(x, y int) int {
+		if x > m-1 || y > n-1 || obstacleGrid[x][y] == 1 {
+			return 0
+		}
+
+		if x == m-1 && y == n-1 {
+			return 1
+		}
+
+		return traceback(x+1, y) + traceback(x, y+1)
+	}
+	return traceback(0, 0)
+}
+
 func TestUniquePathWithOb(t *testing.T) {
 	obstacleGrid := [][]int{{0, 0, 0}, {0, 1, 0}, {0, 0, 0}}
 	fmt.Println(uniquePathsWithObstacles(obstacleGrid))
+	fmt.Println(uniquePathsWithObstaclesRec(obstacleGrid))
 }
