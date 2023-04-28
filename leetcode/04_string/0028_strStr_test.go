@@ -19,7 +19,8 @@ func strStr(haystack string, needle string) int {
 	m := len(haystack)
 	n := len(needle)
 
-	for i := 0; i <= (m - n); i++ { // 枚举haystack字符串中的每一个可能的起始点i
+	for i := 0; i <= (m - n); i++ { // 枚举haystack字符串中的每一个可能的起始点i (i<=(m-n) 可以提前退出)
+		// 每一轮模式串都从0开始，文本串从i开始
 		hStartIndex := i
 		nStartIndex := 0
 
@@ -35,6 +36,33 @@ func strStr(haystack string, needle string) int {
 	return -1
 }
 
+/*
+使用rabin-karp算法实现这个任务
+*/
+func strStr2(haystack string, needle string) int {
+
+	m := len(haystack)
+	n := len(needle)
+	//hashEncode [a...z]->[0...25]编码
+	var hashEncode func(s string) int
+	hashEncode = func(s string) int {
+		var h int
+		for i := 0; i < len(s); i++ {
+			h = h*26 + int(s[i]-'a')
+		}
+		return h
+	}
+	patternHash := hashEncode(needle)
+	for i := 0; i <= (m - n); i++ {
+		//text中的每个子串为：text[i:n+i]
+		if hashEncode(haystack[i:n+i]) == patternHash {
+			return i
+		}
+	}
+	return -1
+}
+
 func TestStrstr(t *testing.T) {
 	fmt.Println(strStr("sadbutsad", "sad"))
+	fmt.Println(strStr2("sadbutsad", "sad"))
 }
