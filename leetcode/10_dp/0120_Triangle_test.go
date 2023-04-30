@@ -85,7 +85,8 @@ func minimumTotal2(triangle [][]int) int {
 6 5 7
 4 1 8 3
 
-数组的宽度最宽为 l = len(triangle[len(triangle)-1]) 我用这样一个一维数组dp[l]保存最小值状态，层层向上，通过覆盖的方式最后返回dp[0] 则得到最小值
+数组的宽度最宽为 l = len(triangle[len(triangle)-1]) 我用这样一个一维数组dp[l]保存最小值状态，
+层层向上，通过覆盖的方式最后返回dp[0] 则得到最小值
 把这个dp数组开成二维空间其实比价容易理解，这里写成一维空间为了压缩空间
 
 */

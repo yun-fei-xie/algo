@@ -27,7 +27,7 @@ func uniquePathsWithObstacles(obstacleGrid [][]int) int {
 	for i := 0; i < len(obstacleGrid); i++ {
 		mem = append(mem, make([]int, n))
 	}
-
+	// 处理最末行
 	hasObs := false
 	for i := n - 1; i >= 0; i-- {
 		if obstacleGrid[m-1][i] == 0 && hasObs == false { // 如果前方一直没有障碍物
@@ -68,7 +68,7 @@ func uniquePathsWithObstacles(obstacleGrid [][]int) int {
 }
 
 /*
-递归模式
+递归模式 递归函数的定义：从（0,0）点走到(x,y)这个点可以选择的路径数量
 */
 func uniquePathsWithObstaclesRec(obstacleGrid [][]int) int {
 	var m = len(obstacleGrid)

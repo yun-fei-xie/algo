@@ -2,6 +2,7 @@ package _0_dp
 
 import (
 	"fmt"
+	"math"
 	"testing"
 )
 
@@ -21,7 +22,30 @@ https://leetcode.cn/problems/minimum-path-sum/
 每次有两种走法，起点和终点固定（走到终点递归终止）
 */
 func minPathSum(grid [][]int) int {
-	return 0
+
+	row := len(grid)
+	col := len(grid[0])
+	var ans = math.MaxInt64
+	var dfs func(grid [][]int, x int, y int, sum int)
+	dfs = func(grid [][]int, x int, y int, sum int) {
+		// 越界
+		if x >= row || y >= col {
+			return
+		}
+		// 达到目标地点
+		if x == row-1 && y == col-1 {
+			sum += grid[x][y]
+			if sum < ans {
+				ans = sum
+			}
+			return
+		}
+
+		dfs(grid, x+1, y, sum+grid[x][y])
+		dfs(grid, x, y+1, sum+grid[x][y])
+	}
+	dfs(grid, 0, 0, 0)
+	return ans
 }
 
 /*
