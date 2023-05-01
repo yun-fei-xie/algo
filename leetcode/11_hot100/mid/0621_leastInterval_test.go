@@ -33,10 +33,6 @@ https://leetcode.cn/problems/task-scheduler/?favorite=2cktkvj
 解释：一种可能的解决方案是：
 
 	A -> B -> C -> A -> D -> E -> A -> F -> G -> A -> (待命) -> (待命) -> A -> (待命) -> (待命) -> A
-
-没什么思路
-
-看题解：
 */
 func leastInterval(tasks []byte, n int) int {
 	//todo

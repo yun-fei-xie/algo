@@ -2,6 +2,7 @@ package mid
 
 import (
 	"fmt"
+	"math/rand"
 	"testing"
 )
 
@@ -19,51 +20,54 @@ https://leetcode.cn/problems/kth-largest-element-in-an-array/description/
 
 */
 
-// 这个解错了是因为数组有重复元素
 func findKthLargest(nums []int, k int) int {
-	var res = -1
-	var quickSearchK func(arr []int, left int, right int)
-	quickSearchK = func(arr []int, left int, right int) {
-		pivot := partition(arr, left, right) // 拿到的是相对于整个数组的索引
-		if pivot+1 == k {
-			res = arr[pivot]
-		} else if pivot+1 > k {
-			quickSearchK(arr, left, pivot-1)
-		} else { // pivot +1 < k
-			quickSearchK(arr, pivot+1, right)
+	length := len(nums)
+	targetIndex := length - k
+	left := 0
+	right := length - 1
+	for {
+		pivotIndex := partition(nums, left, right)
+		if pivotIndex == targetIndex {
+			return nums[pivotIndex]
+		} else if pivotIndex > targetIndex {
+			right = pivotIndex - 1
+		} else {
+			left = pivotIndex + 1
 		}
 	}
 
-	quickSearchK(nums, 0, len(nums)-1)
-
-	return res
 }
 
 /*
 [left , right] 闭区间
 */
 func partition(arr []int, left int, right int) int {
+	//pivotNum := arr[left]
+	//随机 让索引落到[left,right]
+	randIndex := rand.Intn(right-left+1) + left
+	arr[randIndex], arr[left] = arr[left], arr[randIndex]
 
-	pivot := arr[left]
-	begin := left + 1
-	end := right
-	for begin <= end {
-		if arr[begin] <= pivot {
-			begin++
-		} else if arr[end] > pivot {
-			end--
-		} else if arr[begin] > pivot {
-			arr[begin], arr[end] = arr[end], arr[begin]
-			end--
-		} else if arr[end] < pivot {
-			arr[begin], arr[end] = arr[end], arr[begin]
-			begin++
+	pivotNum := arr[left]
+	i := left + 1
+	j := right
+	for i <= j {
+		if arr[j] > pivotNum {
+			j--
+		} else if arr[i] <= pivotNum {
+			i++
+		} else if arr[j] <= pivotNum {
+			arr[j], arr[i] = arr[i], arr[j]
+			i++
+		} else if arr[i] > pivotNum {
+			arr[j], arr[i] = arr[i], arr[j]
+			j--
 		}
 	}
-	arr[left], arr[begin-1] = arr[begin-1], arr[left]
-	return begin - 1
+	arr[i-1], arr[left] = arr[left], arr[i-1]
+	return i - 1
 }
 
 func TestFindKthLargest(t *testing.T) {
 	fmt.Println(findKthLargest([]int{3, 2, 3, 1, 2, 4, 5, 5, 6}, 4))
+	fmt.Println(findKthLargest([]int{1}, 1))
 }
