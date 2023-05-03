@@ -73,8 +73,32 @@ func robdp(nums []int) int {
 	return memo[0]
 }
 
+/*
+最简洁的dp
+dp[i]表示在[0...i]这么多间房子进行偷窃可以获得的最大金额。
+对于第i间房子来说，如果这间房子要偷的话，第i-1间房子就不能偷。
+于是问题转换成了nums[i]+dp[i-2]。
+如果第i间房子不偷，那么问题转化成了[0...i-1]间房子的最大值。
+对于dp[i]来说，它应该等于两者的较大值 dp[i] = max{nums[i]+dp[i-2] , dp[i-1]}
+*/
+func robDp2(nums []int) int {
+	dp := make([]int, len(nums))
+	dp[0] = nums[0]
+	if len(nums) < 2 {
+		return nums[0]
+	}
+	dp[1] = max(nums[0], nums[1])
+
+	for j := 2; j < len(nums); j++ {
+		dp[j] = max(nums[j]+dp[j-2], dp[j-1])
+	}
+	return dp[len(nums)-1]
+}
+
 func TestRob(t *testing.T) {
 	nums := []int{2, 7, 9, 3, 1}
+	// dp        [2, 7, 11,11,12 ]
 	fmt.Println(rob(nums))
 	fmt.Println(robdp(nums))
+	fmt.Println(robDp2(nums))
 }

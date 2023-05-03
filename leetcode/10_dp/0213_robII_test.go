@@ -1,5 +1,10 @@
 package _0_dp
 
+import (
+	"fmt"
+	"testing"
+)
+
 /*
 https://leetcode.cn/problems/house-robber-ii/
 你是一个专业的小偷，计划偷窃沿街的房屋，每间房内都藏有一定的现金。这个地方所有的房屋都 围成一圈 ，这意味着第一个房屋和最后一个房屋是紧挨着的。
@@ -13,9 +18,39 @@ https://leetcode.cn/problems/house-robber-ii/
 输入：nums = [2,3,2]
 输出：3
 解释：你不能先偷窃 1 号房屋（金额 = 2），然后偷窃 3 号房屋（金额 = 2）, 因为他们是相邻的。
+
+这道题和第918号问题，环形连续子数组最大和有点像。
+它多了一个条件。相邻的元素不能同时出现。
+
+环状排列 意味着第一个房子和最后一个房子中 只能选择一个偷窃，
+因此可以把此环状排列房间问题约化为两个单排排列房间子问题：
+
 */
 
 func rob2(nums []int) int {
+	if len(nums) == 1 {
+		return nums[0]
+	}
+	m1 := houseRob(nums, 1, len(nums)-1)
+	m2 := houseRob(nums, 0, len(nums)-2)
+	return max(m1, m2)
+}
+func houseRob(nums []int, left, right int) int {
+	if left == right {
+		return nums[left]
+	}
 
-	return 0
+	dp := make([]int, len(nums))
+	dp[left] = nums[left]
+	dp[left+1] = max(nums[left], nums[left+1])
+	for i := left + 2; i <= right; i++ {
+		dp[i] = max(dp[i-1], dp[i-2]+nums[i])
+	}
+	return dp[right]
+}
+
+func TestRob2(t *testing.T) {
+	fmt.Println(rob2([]int{1, 2, 3, 1}))
+	fmt.Println(rob2([]int{2, 3, 2}))
+	fmt.Println(rob2([]int{1, 2, 3}))
 }
