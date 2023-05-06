@@ -61,13 +61,7 @@ func lengthOfLIS(nums []int) int {
 后续遍历改造
 */
 func lengthOfLIS2(nums []int) int {
-	var max func(int, int) int
-	max = func(i1 int, i2 int) int {
-		if i1 > i2 {
-			return i1
-		}
-		return i2
-	}
+	var ans int = 1
 	//递归函数的定义，返回[startIndex,len(nums))的最长递增子序列的长度 nums[startIndex]必须在序列中
 	var dfs func(nums []int, startIndex int) int
 	dfs = func(nums []int, startIndex int) int {
@@ -85,20 +79,15 @@ func lengthOfLIS2(nums []int) int {
 			ret = max(ret, d)
 		}
 		//	fmt.Printf("startIndex: %d  num: %d  ret %d\n", startIndex, nums[startIndex], ret)
+		ans = max(ans, ret)
 		return ret
 	}
-
-	return dfs(nums, 0)
+	dfs(nums, 0)
+	return ans
 }
 
 func lengthOfLIS3(nums []int) int {
-	var max func(int, int) int
-	max = func(i1 int, i2 int) int {
-		if i1 > i2 {
-			return i1
-		}
-		return i2
-	}
+	var ans = 1
 	mem := make([]int, len(nums))
 	//递归函数的定义，返回[startIndex,len(nums))的最长递增子序列的长度 nums[startIndex]必须在序列中
 	var dfs func(nums []int, startIndex int) int
@@ -119,17 +108,11 @@ func lengthOfLIS3(nums []int) int {
 			}
 		}
 		mem[startIndex] = ret
-		fmt.Printf("startIndex: %d  num: %d  ret %d\n", startIndex, nums[startIndex], ret)
+		// fmt.Printf("startIndex: %d  num: %d  ret %d\n", startIndex, nums[startIndex], ret)
+		ans = max(ans, mem[startIndex])
 		return mem[startIndex]
 	}
 	dfs(nums, 0)
-	//  这个地方是我没想到的。
-	var ans = math.MinInt32
-	for i := 0; i < len(mem); i++ {
-		if mem[i] > ans {
-			ans = mem[i]
-		}
-	}
 	return ans
 }
 
@@ -165,9 +148,9 @@ func lengthOfLIS4(nums []int) int {
 func TestLengthOfLIS(t *testing.T) {
 	//fmt.Println(lengthOfLIS3([]int{10, 9, 2, 5, 3, 7, 101, 18}))
 	fmt.Println(lengthOfLIS3([]int{10, 9, 2, 5, 3, 7, 101, 18}))
-	//fmt.Println(lengthOfLIS3([]int{4, 10, 4, 3, 8, 9}))
-	//fmt.Println(lengthOfLIS3([]int{0, 1, 0, 3, 2, 3}))
-	//fmt.Println(lengthOfLIS2([]int{0, 1, 0, 3, 2, 3}))
+	fmt.Println(lengthOfLIS3([]int{4, 10, 4, 3, 8, 9}))
+	fmt.Println(lengthOfLIS3([]int{0, 1, 0, 3, 2, 3}))
+	fmt.Println(lengthOfLIS2([]int{0, 1, 0, 3, 2, 3}))
 	// 0, 1, 0, 3, 2, 3
 	// 4, 3, 3, 1 ,2 ,1
 	// 4, 3, 0, 1, 2, 1

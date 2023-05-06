@@ -30,7 +30,34 @@ func findLengthOfLCIS(nums []int) int {
 	return ans
 }
 
+func findLengthOfLCIS2(nums []int) int {
+	var maxLen = 1
+	var dfs func(startIndex int) int
+	dfs = func(startIndex int) int {
+		// 递归到底只有一个元素，表示以startIndex开始的子数组的最长连续自增子序列的长度只有1
+		if startIndex == len(nums)-1 {
+			return 1
+		}
+		// 应该放在这里,确保递归一定能下去
+		next := dfs(startIndex + 1)
+
+		if nums[startIndex] < nums[startIndex+1] {
+			//next := dfs(startIndex + 1)
+			maxLen = max(maxLen, 1+next)
+			return 1 + next
+
+		} else {
+			return 1
+		}
+	}
+	dfs(0)
+	return maxLen
+}
+
 func TestFindLengthOfLCIS(t *testing.T) {
 	fmt.Println(findLengthOfLCIS([]int{1, 3, 5, 2, 7}))
+	fmt.Println(findLengthOfLCIS2([]int{1, 3, 5, 2, 7}))
 	fmt.Println(findLengthOfLCIS([]int{2, 2, 2, 2, 2, 2}))
+	fmt.Println(findLengthOfLCIS2([]int{2, 2, 2, 2, 2, 2}))
+	fmt.Println(findLengthOfLCIS2([]int{1, 3, 5, 4, 2, 3, 4, 5}))
 }

@@ -35,11 +35,14 @@ func maxProduct(nums []int) int {
 	return ans
 }
 
-func min(i, j int) int {
-	if i > j {
-		return j
+func min(args ...int) int {
+	min := args[0]
+	for _, item := range args {
+		if item < min {
+			min = item
+		}
 	}
-	return i
+	return min
 }
 
 func TestMaxProduct(t *testing.T) {

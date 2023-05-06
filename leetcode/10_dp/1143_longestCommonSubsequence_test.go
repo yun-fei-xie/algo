@@ -46,11 +46,15 @@ func longestCommonSubsequence(text1 string, text2 string) int {
 			}
 		}
 	}
+	// 最大值肯定是右下角 因为在求解的过程中，不是+1，就是取max
+	for i := 0; i < len(dp); i++ {
+		fmt.Println(dp[i])
+	}
 	return dp[len2][len1]
 }
 
 func TestLongestCommonSubsequence(t *testing.T) {
 	fmt.Println(longestCommonSubsequence("abcde", "ace"))
-	fmt.Println(longestCommonSubsequence("abc", "abc"))
-	fmt.Println(longestCommonSubsequence("ac", "abc"))
+	//fmt.Println(longestCommonSubsequence("abc", "abc"))
+	//fmt.Println(longestCommonSubsequence("ac", "abc"))
 }
