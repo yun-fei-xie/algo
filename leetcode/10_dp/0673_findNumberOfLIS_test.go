@@ -52,11 +52,14 @@ func findNumberOfLIS(nums []int) int {
 
 	return ans
 }
-func max(i, j int) int {
-	if i > j {
-		return i
+func max(args ...int) int {
+	m := args[0]
+	for i := 1; i < len(args); i++ {
+		if args[i] > m {
+			m = args[i]
+		}
 	}
-	return j
+	return m
 }
 
 func TestFindNumberOfLIS(t *testing.T) {
