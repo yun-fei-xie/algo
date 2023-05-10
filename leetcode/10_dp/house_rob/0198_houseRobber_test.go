@@ -1,7 +1,6 @@
 package house_rob
 
 import (
-	"algo/leetcode/10_dp"
 	"fmt"
 	"math"
 	"testing"
@@ -92,10 +91,10 @@ func robDp2(nums []int) int {
 	if len(nums) < 2 {
 		return nums[0]
 	}
-	dp[1] = _0_dp.max(nums[0], nums[1])
+	dp[1] = max(nums[0], nums[1])
 
 	for j := 2; j < len(nums); j++ {
-		dp[j] = _0_dp.max(nums[j]+dp[j-2], dp[j-1])
+		dp[j] = max(nums[j]+dp[j-2], dp[j-1])
 	}
 	return dp[len(nums)-1]
 }
