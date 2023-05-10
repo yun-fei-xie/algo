@@ -42,7 +42,7 @@ func maxProfit1(prices []int) int {
 }
 
 /*
-如何保证冷冻
+如何保证冷冻 打家劫舍问题 不相邻
 */
 func maxProfitDp(prices []int) int {
 

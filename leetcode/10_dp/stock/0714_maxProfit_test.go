@@ -27,6 +27,9 @@ https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-transaction-fe
 
 */
 
+/*
+递归解法
+*/
 func maxProfitFee(prices []int, fee int) int {
 
 	var dfs func(i int, hold int) int
@@ -45,6 +48,9 @@ func maxProfitFee(prices []int, fee int) int {
 	return dfs(len(prices)-1, 0)
 }
 
+/*
+动态规划
+*/
 func maxProfitFeeDp(prices []int, fee int) int {
 
 	// 本题只有2个状态

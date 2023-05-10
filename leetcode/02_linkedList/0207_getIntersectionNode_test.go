@@ -39,6 +39,7 @@ func getIntersectionNode(headA, headB *ListNode) *ListNode {
 	return nil
 }
 
+// 代码尽量这样写 划分成不同的函数
 func move(node *ListNode, step int) *ListNode {
 
 	for i := 0; i < step; i++ {

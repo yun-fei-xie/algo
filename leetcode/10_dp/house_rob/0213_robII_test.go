@@ -1,6 +1,7 @@
-package _0_dp
+package house_rob
 
 import (
+	"algo/leetcode/10_dp"
 	"fmt"
 	"testing"
 )
@@ -33,7 +34,7 @@ func rob2(nums []int) int {
 	}
 	m1 := houseRob(nums, 1, len(nums)-1)
 	m2 := houseRob(nums, 0, len(nums)-2)
-	return max(m1, m2)
+	return _0_dp.max(m1, m2)
 }
 func houseRob(nums []int, left, right int) int {
 	if left == right {
@@ -42,9 +43,9 @@ func houseRob(nums []int, left, right int) int {
 
 	dp := make([]int, len(nums))
 	dp[left] = nums[left]
-	dp[left+1] = max(nums[left], nums[left+1])
+	dp[left+1] = _0_dp.max(nums[left], nums[left+1])
 	for i := left + 2; i <= right; i++ {
-		dp[i] = max(dp[i-1], dp[i-2]+nums[i])
+		dp[i] = _0_dp.max(dp[i-1], dp[i-2]+nums[i])
 	}
 	return dp[right]
 }
