@@ -12,15 +12,16 @@ https://leetcode.cn/problems/max-consecutive-ones-iii/
 
 这个题的精髓在于，不需要真的翻转，而是记录窗口中0的个数
 当窗口中的0个个数<=k ，窗口都是合法的。于是再次变成简单的滑动窗口问题。
+用一个map记录区间中有多少一个1，多少个0。
 
 */
 
 func longestOnes(nums []int, k int) int {
 	mp0 := make(map[int]int)
 	mp0[1] = 0
-	mp0[0] = 0
-	maxLength := math.MinInt64
-	left := 0
+	mp0[0] = 0                 // 多于
+	maxLength := math.MinInt64 // 不需要
+	left := 0                  // 可以放到for中
 	right := 0
 	for right < len(nums) {
 		mp0[nums[right]]++
@@ -29,7 +30,7 @@ func longestOnes(nums []int, k int) int {
 			if right-left+1 > maxLength {
 				maxLength = right - left + 1
 			}
-			right++
+			right++ // if else 同时出现 right++ 可以放到for表达式中
 
 		} else { // 窗口不合法,从尾部拿掉一个元素
 			for {
@@ -50,9 +51,30 @@ func longestOnes(nums []int, k int) int {
 	return maxLength
 }
 
+// 更加简洁的代码，上一个解写的荣誉主要是因为map用的不熟悉。
+// map查找一个不存在的值会返回value类型的字面量。而且map可以直接用++ --
+func longestOnes2(nums []int, k int) int {
+	var ans int
+	counter := make(map[int]int)
+
+	for left, right := 0, 0; right < len(nums); right++ {
+		counter[nums[right]]++
+		if counter[0] <= k {
+			ans = max(ans, right-left+1)
+			continue
+		} else {
+			for counter[0] > k {
+				counter[nums[left]]--
+				left++
+			}
+		}
+	}
+	return ans
+}
+
 func TestLongestOnes(t *testing.T) {
 
-	res := longestOnes([]int{1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0}, 2)
-	fmt.Println(res)
+	//fmt.Println(longestOnes([]int{1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0}, 2))
+	fmt.Println(longestOnes2([]int{1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0}, 2))
 
 }
