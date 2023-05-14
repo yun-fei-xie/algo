@@ -32,7 +32,7 @@ func getMinimumDifference(root *TreeNode) int {
 		}
 
 		inOrder(node.Left)
-
+		// 对于第一个节点，进行特殊判断
 		if pre != nil {
 			result = getMin(result, pre.Val, node.Val)
 		}
@@ -49,15 +49,12 @@ func getMinimumDifference(root *TreeNode) int {
 /*
 取 r1 与 abs（r2 , r3）的较小值
 */
-func getMin(r1, r2, r3 int) int {
-	var t1 int
-	if r2 > r3 {
-		t1 = r2 - r3
-	} else {
-		t1 = r3 - r2
+func getMin(args ...int) int {
+	m := args[0]
+	for i := 1; i < len(args); i++ {
+		if args[i] < m {
+			m = args[i]
+		}
 	}
-	if t1 > r1 {
-		return r1
-	}
-	return t1
+	return m
 }

@@ -13,7 +13,10 @@ https://leetcode.cn/problems/maximum-depth-of-binary-tree/
 
 */
 
-func maxDepth(root *TreeNode) int {
+/*
+将子树高度返回给父节点
+*/
+func maxDepth1(root *TreeNode) int {
 	return maxDepthAux(root)
 }
 
@@ -35,4 +38,22 @@ func max(i int, j int) int {
 	}
 	return j
 
+}
+
+/*
+将深度传入递归函数中
+*/
+func maxDepth2(root *TreeNode) int {
+	var ans int
+	var dfs func(node *TreeNode, depth int)
+	dfs = func(node *TreeNode, depth int) {
+		if node == nil {
+			ans = max(ans, depth)
+			return
+		}
+		dfs(node.Left, depth+1)
+		dfs(node.Right, depth+1)
+	}
+	dfs(root, 0)
+	return ans
 }

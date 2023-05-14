@@ -4,6 +4,8 @@ import "container/list"
 
 /*
 https://leetcode.cn/problems/binary-tree-right-side-view/
+199. 二叉树的右视图
+
 给定一个二叉树的 根节点 root，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
 
 咋一看以为只需要沿着右子树遍历即可。实际上是不对的（想象一下全是左子树的情况）
@@ -12,6 +14,10 @@ https://leetcode.cn/problems/binary-tree-right-side-view/
 然后把每一层的最后一位收集起来。主要注意的是，在递归层序遍历的时候，同一层的元素不是连续遍历的。而是使用depth对当前遍历到的元素进行层数标记。
 
 解法2（迭代）: 用队列遍历的时候判断是否遍历到这一层的最右边的元素，如果是则放入数组
+
+方法3：反中序遍历
+每次先遍历右子树(因为收集的是右视图，先去看右子树)，用一个path收集右视图节点。
+如果当前节点的深度等于path的长度+1，那么它就是一个右视图节点。
 
 */
 /*
@@ -99,4 +105,24 @@ func rightSideViewErr(root *TreeNode) []int {
 	}
 	return values
 
+}
+
+func rightSideView3(root *TreeNode) []int {
+	var ans = make([]int, 0)
+
+	var inOrder func(node *TreeNode, depth int)
+	// depth表示当前节点的深度，depth(root)->1
+	inOrder = func(node *TreeNode, depth int) {
+		if node == nil {
+			return
+		}
+		if depth > len(ans) {
+			ans = append(ans, node.Val)
+		}
+
+		inOrder(node.Right, depth+1)
+		inOrder(node.Left, depth+1)
+	}
+	inOrder(root, 1)
+	return ans
 }
