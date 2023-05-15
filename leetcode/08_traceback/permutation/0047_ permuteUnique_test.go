@@ -1,4 +1,4 @@
-package _8_traceback
+package permutation
 
 import (
 	"fmt"
@@ -6,14 +6,12 @@ import (
 )
 
 /*
+47. 全排列 II
 https://leetcode.cn/problems/permutations-ii/
 
 输入：nums = [1,1,2]
 输出：
-[[1,1,2],
-
-	[1,2,1],
-	[2,1,1]]
+[[1,1,2],[1,2,1],[2,1,1]]
 */
 func permuteUnique(nums []int) [][]int {
 	res := make([][]int, 0)
