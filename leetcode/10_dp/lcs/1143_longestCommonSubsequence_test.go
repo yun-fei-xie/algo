@@ -1,4 +1,4 @@
-package _0_dp
+package lcs
 
 import (
 	"fmt"
@@ -29,6 +29,32 @@ a
 c
 e
 */
+
+/*
+递归写法
+*/
+func longestCommonSubSequence1(text1 string, text2 string) int {
+
+	m := len(text1)
+	n := len(text2)
+
+	var dfs func(i int, j int) int
+	dfs = func(i int, j int) int {
+		if i < 0 || j < 0 {
+			return 0
+		}
+
+		if text1[i] == text2[j] {
+			return dfs(i-1, j-1) + 1
+		}
+		return max(dfs(i-1, j), dfs(i, j-1))
+	}
+	return dfs(m, n)
+}
+
+/*
+1:1翻译成递推
+*/
 func longestCommonSubsequence(text1 string, text2 string) int {
 	len1, len2 := len(text1), len(text2)
 	dp := make([][]int, len2+1)
@@ -51,6 +77,16 @@ func longestCommonSubsequence(text1 string, text2 string) int {
 		fmt.Println(dp[i])
 	}
 	return dp[len2][len1]
+}
+
+func max(args ...int) int {
+	m := args[0]
+	for i := 1; i < len(args); i++ {
+		if args[i] > m {
+			m = args[i]
+		}
+	}
+	return m
 }
 
 func TestLongestCommonSubsequence(t *testing.T) {

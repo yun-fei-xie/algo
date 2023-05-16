@@ -63,8 +63,8 @@ func lengthOfLIS(nums []int) int {
 func lengthOfLIS2(nums []int) int {
 	var ans int = 1
 	//递归函数的定义，返回[startIndex,len(nums))的最长递增子序列的长度 nums[startIndex]必须在序列中
-	var dfs func(nums []int, startIndex int) int
-	dfs = func(nums []int, startIndex int) int {
+	var dfs func(startIndex int) int
+	dfs = func(startIndex int) int {
 		if startIndex >= len(nums)-1 {
 			return 1
 		}
@@ -72,7 +72,7 @@ func lengthOfLIS2(nums []int) int {
 		var ret = 1
 		for i := startIndex + 1; i < len(nums); i++ {
 			//尝试将nums[startIndex]放在[startIndex+1,len(nums)-1] 中的各个子序列的前面
-			d := dfs(nums, i)
+			d := dfs(i)
 			if nums[startIndex] < nums[i] {
 				d++
 			}
@@ -82,7 +82,7 @@ func lengthOfLIS2(nums []int) int {
 		ans = max(ans, ret)
 		return ret
 	}
-	dfs(nums, 0)
+	dfs(0)
 	return ans
 }
 
