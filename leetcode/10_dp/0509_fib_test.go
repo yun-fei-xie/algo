@@ -1,7 +1,5 @@
 package _0_dp
 
-import "algo/leetcode/10_dp/kanpsack"
-
 /*
 https://leetcode.cn/problems/fibonacci-number/description/
 */
@@ -20,7 +18,7 @@ func fib2(n int) int {
 		return n
 	}
 	if fibMem[n] != 0 {
-		return kanpsack.mem[n]
+		return fibMem[n]
 	}
 	fibMem[n] = fib2(n-1) + fib2(n-2)
 	return fibMem[n]
