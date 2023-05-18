@@ -1,11 +1,11 @@
-package easy
+package treeDP
 
 import (
 	"math"
 )
 
 /*
-
+543. 二叉树的直径
 https://leetcode.cn/problems/diameter-of-binary-tree/description/?favorite=2cktkvj
 
 给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。这条路径可能穿过也可能不穿过根结点。
@@ -21,8 +21,8 @@ https://leetcode.cn/problems/diameter-of-binary-tree/description/?favorite=2cktk
 
 注意：两结点之间的路径长度是以它们之间边的数目表示。
 
-
-
+方法：分别计算以当前节点为根节点的左边的最长链和右边的最长链的长度。
+在遍历时，不断更新全局的（左边最长链+右边最长链+1）
 
 */
 
@@ -32,7 +32,7 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func diameterOfBinaryTree(root *TreeNode) int {
+func diameterOfBinaryTree1(root *TreeNode) int {
 	max := math.MinInt64
 
 	var findHighest func(node *TreeNode) int

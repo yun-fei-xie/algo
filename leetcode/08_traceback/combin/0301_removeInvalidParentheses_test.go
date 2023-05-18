@@ -115,9 +115,9 @@ func min(args ...int) int {
 }
 
 func TestRemoveInvalidParentheses(t *testing.T) {
-	//fmt.Println(removeInvalidParentheses("()())()"))
-	//fmt.Println(removeInvalidParentheses("(a)())()"))
-	//fmt.Println(removeInvalidParentheses(")("))
-	//fmt.Println(removeInvalidParentheses("x("))
+	fmt.Println(removeInvalidParentheses("()())()"))
+	fmt.Println(removeInvalidParentheses("(a)())()"))
+	fmt.Println(removeInvalidParentheses(")("))
+	fmt.Println(removeInvalidParentheses("x("))
 	fmt.Println(removeInvalidParentheses(")(f"))
 }
