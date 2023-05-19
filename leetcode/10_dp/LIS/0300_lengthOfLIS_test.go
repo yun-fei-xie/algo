@@ -1,4 +1,4 @@
-package _0_dp
+package LIS
 
 import (
 	"fmt"
@@ -143,6 +143,16 @@ func lengthOfLIS4(nums []int) int {
 	}
 
 	return ans
+}
+
+func max(args ...int) int {
+	m := args[0]
+	for i := 1; i < len(args); i++ {
+		if args[i] > m {
+			m = args[i]
+		}
+	}
+	return m
 }
 
 func TestLengthOfLIS(t *testing.T) {

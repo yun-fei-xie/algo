@@ -1,4 +1,4 @@
-package mid
+package palindromic_string
 
 import (
 	"fmt"
@@ -91,10 +91,109 @@ func isPali(s *string, left int, right int) bool {
 	return true
 }
 
+/*
+动态规划
+以i,j为左右端点的最长回文子串如何思考：
+
+ 1. 如果s[i]==s[j]的话，
+    a. s[i+1...j-1]也是回文串，那么dp[i][j] = dp[i+1][j-1] + 2
+    b. s[i+1...j-1]不是回文串，那么dp[i][j] = dp[i+1][j-1]
+
+ 2. 如果s[i]!=s[j]的话，
+    dp[i][j] = max{dp[i+1][j], dp[i][j-1]}
+
+如果将递归函数的返回值修改为bool类型，表示内层状态是否是回文串，使用i,j计算回文串的长度，就可以拿到最大值
+*/
+func longestPalindrome3(s string) string {
+	left, right := -1, -1
+	maxLen := -1
+	var dfs func(i, j int) bool
+	dfs = func(i, j int) bool {
+		// 只有一个字符或者空字符必然是回文串
+		if i >= j {
+			if j-i+1 > maxLen {
+				left = i
+				right = j
+			}
+			return true
+		}
+		if dfs(i+1, j-1) && s[i] == s[j] {
+			if j-i+1 > maxLen {
+				left = i
+				right = j
+			}
+			return true
+		}
+		//两种情况
+		dfs(i, j-1)
+		dfs(i+1, j)
+		return false
+	}
+	dfs(0, len(s)-1)
+	return s[left : right+1]
+}
+
+func max(args ...int) int {
+	m := args[0]
+	for i := 1; i < len(args); i++ {
+		if args[i] > m {
+			m = args[i]
+		}
+	}
+	return m
+}
+
+/*
+动态规划
+*/
+func longestPalindrome4(s string) string {
+	if len(s) < 2 {
+		return s
+	}
+	dp := make([][]bool, len(s))
+	// dp[i][j] 表示s[i...j]是不是回文串
+
+	// 处理长度为1的
+	for i := 0; i < len(dp); i++ {
+		dp[i] = make([]bool, len(s))
+		dp[i][i] = true
+	}
+	maxLen := 1
+	startIndex := -1
+	// 处理长度为2的
+	for i := 0; i < len(s)-1; i++ {
+		if s[i] == s[i+1] {
+			dp[i][i+1] = true
+			maxLen = 2
+			startIndex = i
+		}
+	}
+	// 处理长度大于3的
+	// i依赖于i+1 j依赖于j-1 因此，i需要从大到小进行遍历，j需要从小到大进行遍历
+	for i := len(s) - 3; i >= 0; i-- {
+		for j := i + 2; j < len(s); j++ {
+			subLen := j - i + 1
+			if s[i] == s[j] && dp[i+1][j-1] {
+				dp[i][j] = true
+				if subLen > maxLen {
+					maxLen = subLen
+					startIndex = i
+				}
+			}
+		}
+	}
+	return s[startIndex : startIndex+maxLen]
+}
+
 func TestLongestPalindrome(t *testing.T) {
 
 	//fmt.Println(longestPalindrome("babad"))
-	fmt.Println(longestPalindrome("bb"))
-	fmt.Println(longestPalindrome2("babad"))
+	//fmt.Println(longestPalindrome("bb"))
+	//fmt.Println(longestPalindrome2("babad"))
+	//fmt.Println(longestPalindrome3("babad"))
+	//fmt.Println(longestPalindrome4("babad"))
+	//fmt.Println(longestPalindrome3("b"))
+	//fmt.Println(longestPalindrome4("b"))
+	fmt.Println(longestPalindrome4("ccc"))
 
 }
