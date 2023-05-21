@@ -1,4 +1,4 @@
-package LIS
+package lis
 
 /*
 435. 无重叠区间

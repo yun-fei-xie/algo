@@ -1,4 +1,4 @@
-package LIS
+package lis
 
 import (
 	"fmt"
