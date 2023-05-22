@@ -1,4 +1,9 @@
-package mid
+package _6_graph
+
+import (
+	"fmt"
+	"testing"
+)
 
 /*
 https://leetcode.cn/problems/course-schedule/?favorite=2cktkvj
@@ -19,29 +24,51 @@ https://leetcode.cn/problems/course-schedule/?favorite=2cktkvj
 输出：false
 解释：总共有 2 门课程。学习课程 1 之前，你需要先完成​课程 0 ；并且学习课程 0 之前，你还应先完成课程 1 。这是不可能的。
 
+方法1：通过深度优先遍历判断图中是否有环
 
-典型的拓扑排序
-如何表示这个图的关系呢？用邻接矩阵
 
-从入度为0的节点开始进行广度优先遍历，当整个图遍历完成时，如果收入集合中的节点个数
-满足题目中要求的数量，则ok.
+方法2：通过拓扑排序判断
+
 
 */
 
 func canFinish(numCourses int, prerequisites [][]int) bool {
-	var res bool
+	graph := make([][]int, numCourses)
+	for i := 0; i < len(prerequisites); i++ {
+		in := prerequisites[i][0]
+		out := prerequisites[i][1]
+		graph[out] = append(graph[out], in)
+	}
+	var hasCycle bool
+	var onPath = make([]bool, numCourses)
+	var visited = make([]bool, numCourses)
 
-	//graph := make([][]int, 0)
-	//visit := make([]bool, numCourses)
-	//for i := 0; i < numCourses; i++ {
-	//	graph = append(graph, make([]int, numCourses))
-	//}
-	//
-	//for _, pre := range prerequisites {
-	//	graph[pre[0]][pre[1]] = 1 // 1代表有边
-	//}
+	var dfs func(i int)
+	dfs = func(i int) {
+		if visited[i] || hasCycle {
+			return
+		}
+		visited[i] = true
+		onPath[i] = true
+		for _, node := range graph[i] {
+			if !visited[node] {
+				dfs(node)
+				//可以放在这里判断：如果一个节点已经被访问过，并且在path中，那么肯定形成了环
+			} else if visited[node] && onPath[node] {
+				hasCycle = true
+				return
+			}
+		}
+		onPath[i] = false
+	}
 
-	// 从一个入度为0的点开始寻找
+	for i := 0; i < numCourses; i++ {
+		dfs(i)
+	}
 
-	return res
+	return !hasCycle
+}
+
+func TestCanFinish(t *testing.T) {
+	fmt.Println(canFinish(2, [][]int{{1, 0}, {0, 1}}))
 }

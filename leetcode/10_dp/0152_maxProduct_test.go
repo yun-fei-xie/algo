@@ -6,6 +6,9 @@ import (
 )
 
 /*
+152. 乘积最大子数组
+https://leetcode.cn/problems/maximum-product-subarray/
+
 输入: nums = [2,3,-2,4]
 输出: 6
 解释: 子数组 [2,3] 有最大乘积 6。
@@ -36,13 +39,13 @@ func maxProduct(nums []int) int {
 }
 
 func min(args ...int) int {
-	min := args[0]
+	m := args[0]
 	for _, item := range args {
-		if item < min {
-			min = item
+		if item < m {
+			m = item
 		}
 	}
-	return min
+	return m
 }
 
 func TestMaxProduct(t *testing.T) {

@@ -5,6 +5,9 @@ import (
 	"testing"
 )
 
+/*
+实现一个最小堆
+*/
 type MinHeap struct {
 	data  []int
 	count int

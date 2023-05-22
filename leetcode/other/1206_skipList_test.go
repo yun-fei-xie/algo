@@ -1,4 +1,4 @@
-package skipList
+package other
 
 import (
 	"fmt"
@@ -100,7 +100,12 @@ func (s *Skiplist) Erase(num int) bool {
 	}
 	return true
 }
-
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
 func TestSkipList(t *testing.T) {
 	skiplist := Constructor()
 	for i := 10; i >= 0; i-- {
