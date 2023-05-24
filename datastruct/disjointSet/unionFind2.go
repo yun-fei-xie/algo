@@ -45,19 +45,8 @@ func (un *unionFind2) isConnected(p, q int) bool {
 }
 
 /*
-查找节点p的root节点
-*/
-//func (un *unionFind2) find(p int) int {
-//	for un.parent[p] != p {
-//		p = un.parent[p]
-//	}
-//	return p
-//}
-
-/*
 在查找的过程中实现路径压缩
 */
-
 func (un *unionFind2) find(p int) int {
 	parentId := un.parent[p]
 	if parentId == p {

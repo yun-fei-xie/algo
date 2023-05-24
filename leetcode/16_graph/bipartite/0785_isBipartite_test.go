@@ -1,4 +1,4 @@
-package _6_graph
+package bipartite
 
 import "container/list"
 

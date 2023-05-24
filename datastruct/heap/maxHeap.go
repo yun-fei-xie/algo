@@ -22,6 +22,10 @@ func NewMaxHeap() *MaxHeap {
 	}
 }
 
+func (h *MaxHeap) GetSize() int {
+	return h.count
+}
+
 /*
 对每一个非叶子节点进行一次shiftDown操作 , 倒数第一个非叶子节点的下标是 (count-1)/2
 */

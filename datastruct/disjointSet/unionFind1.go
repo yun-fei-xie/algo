@@ -8,34 +8,34 @@ package disjointSet
 如果两个数据的id值相同，则表示两个数据是互相连接的。
 将两个组合并：将其中一个组的id值全部修改为另外一个组的id值。
 */
-type unionFind struct {
+type UnionFind struct {
 	id    []int
 	count int
 }
 
 // 初始时，每个元素各自为一组，互不连接
-func initUnionFind(n int) *unionFind {
+func InitUnionFind(n int) *UnionFind {
 	id := make([]int, n)
 	for i := 0; i < n; i++ {
 		id[i] = i
 	}
-	return &unionFind{
+	return &UnionFind{
 		id:    id,
 		count: n,
 	}
 }
 
-func (un *unionFind) find(p int) int {
+func (un *UnionFind) Find(p int) int {
 	return un.id[p]
 }
 
-func (un *unionFind) isConnected(p, q int) bool {
+func (un *UnionFind) IsConnected(p, q int) bool {
 	return un.id[p] == un.id[q]
 }
 
-func (un *unionFind) unionElements(p, q int) {
-	pId := un.find(p)
-	qId := un.find(q)
+func (un *UnionFind) UnionElements(p, q int) {
+	pId := un.Find(p)
+	qId := un.Find(q)
 	if pId == qId {
 		return
 	}

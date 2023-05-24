@@ -1,4 +1,4 @@
-package _6_graph
+package bipartite
 
 /*
 886. 可能的二分法

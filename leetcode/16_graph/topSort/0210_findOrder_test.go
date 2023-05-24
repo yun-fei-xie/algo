@@ -1,4 +1,4 @@
-package _6_graph
+package topSort
 
 import "container/list"
 
