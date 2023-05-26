@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main() {
+func main6() {
 
 	var t int
 	var k int
@@ -36,19 +36,3 @@ func combin(mod1 int, mod2 int) int {
 	}
 	return (mod2) + (mod1-mod2)/3
 }
-
-//func combin(mod1 int, mod2 int) (ans int) {
-//	for {
-//		if mod2 >= 1 && mod1 >= 1 {
-//			ans = ans + 1
-//			mod2 = mod2 - 1
-//			mod1 = mod1 - 1
-//		} else if mod2 == 0 && mod1 >= 3 {
-//			mod2 = mod2 + 1
-//			mod1 = mod1 - 2
-//		} else {
-//			break
-//		}
-//	}
-//	return ans
-//}

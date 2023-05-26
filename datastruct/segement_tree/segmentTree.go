@@ -1,91 +1,9 @@
-package main
-
-import (
-	"fmt"
-	"sort"
-)
+package segement_tree
 
 /*
-Description
-C 公司对一个即将上线的业务进行了测试，为了更好的评估该业务测试期间的运行状态，C 公司的 Alice 同学打算写一个工具来对该业务的 Access Log 进行处理，她希望能通过这个工具知道任意一个时间段内 (闭区间，精确到秒) 该业务有多少次访问。
-为了方便处理，机智的 Alice 同学写了个脚本将 Access Log 简化为了每条日志只有一个时间戳数据，即简化后的 Access Log 是一个 N 行的文本，每行是一个整数时间戳，代表该时刻有一次访问，如下图所示:
-
-1564900123
-1564934135
-1564934132
-1564934666
-1564931024
-但是 Alice 同学太忙了，所以需要请你帮她实现这个问题。
-
+链表实现线段树
+统计有序数组中，给定区间大小[low ,high]中，数组中包含多少个元素
 */
-
-func main1() {
-	var t int
-	fmt.Scan(&t)
-
-	for i := 0; i < t; i++ {
-		var N, M int
-		fmt.Scan(&N)
-
-		logs := make([]int, N)
-		for j := 0; j < N; j++ {
-			fmt.Scan(&logs[j])
-		}
-
-		sort.Ints(logs)
-		segTree := BuildSegmentTree(logs)
-
-		fmt.Scan(&M)
-		for j := 0; j < M; j++ {
-			var b, e int
-			fmt.Scan(&b, &e)
-			count := segTree.Query(b, e)
-			fmt.Printf("%d", count)
-			if j != M-1 {
-				fmt.Println()
-			}
-		}
-	}
-}
-
-func mainP1() {
-
-	var t int
-	fmt.Scan(&t)
-
-	var query func(arr []uint64, left uint64, right uint64) (count uint64)
-	query = func(arr []uint64, left uint64, right uint64) (count uint64) {
-		for i := 0; i < len(arr); i++ {
-			if arr[i] >= left && arr[i] <= right {
-				count++
-			}
-		}
-		return count
-	}
-
-	for i := 0; i < t; i++ {
-		var N, M int
-		fmt.Scan(&N)
-
-		logs := make([]uint64, N)
-		for j := 0; j < N; j++ {
-			fmt.Scan(&logs[j])
-		}
-		fmt.Scan(&M)
-		for j := 0; j < M; j++ {
-			var b, e uint64
-			fmt.Scan(&b, &e)
-			count := query(logs, b, e)
-			fmt.Printf("%d", count)
-			if j != M-1 {
-				fmt.Println()
-			}
-		}
-	}
-
-}
-
-// 线段树求解
 
 type SegmentTree struct {
 	root *segmentNode
