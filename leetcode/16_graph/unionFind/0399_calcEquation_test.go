@@ -64,7 +64,8 @@ func calcEquation(equations [][]string, values []float64, queries [][]string) []
 }
 
 // 带权并查集
-// 如何对equation进行编码？按照方程的下标进行编码。节点的个数肯定不会多于2*len(equations)
+// 如何对equation进行编码？按照方程的下标进行编码。
+// 使用hash表和自增ID对每一个元素进行编码。这样不需要考虑元素重复的问题。
 type ufWeighted struct {
 	parent []int
 	weight []float64
