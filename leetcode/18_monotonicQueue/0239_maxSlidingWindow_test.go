@@ -1,4 +1,4 @@
-package _6_stackandqueue
+package _8_monotonicQueue
 
 import (
 	"container/list"
@@ -35,7 +35,6 @@ https://leetcode.cn/problems/sliding-window-maximum/
 1.pop(value)：如果窗口移除的元素value等于单调队列的出口元素，那么队列弹出元素，否则不用任何操作
 2.push(value)：如果push的元素value大于入口元素的数值，那么就将队列入口的元素弹出，直到push元素的数值小于等于队列入口元素的数值为止
 
-这个题目感觉不是特别难理解，但是需要仔细体会
 
 */
 
@@ -48,12 +47,20 @@ func NewMonotoneQueue() *MonotoneQueue {
 	return &MonotoneQueue{l: list.New()}
 }
 
+/*
+pop操作：让区间左端点和队首元素进行比较，如果队首元素不是value，那么队首元素不需要出栈
+*/
 func (queue *MonotoneQueue) Pop(value int) {
 	if queue.l.Len() != 0 && value == queue.l.Front().Value.(int) {
 		queue.l.Remove(queue.l.Front())
 	}
 }
 
+/*
+push操作：让区间右端点val和队尾的元素进行比较，如果value>队尾元素，则移除队尾元素。
+直到队列为空，或者是队尾元素大于当前的value值。最后将value放入队尾部。
+整个队列从左到右看，呈现出递减的状态。（求区间最大值，队列呈现单调递减）
+*/
 func (queue *MonotoneQueue) Push(value int) {
 	for queue.l.Len() != 0 && value > queue.l.Back().Value.(int) {
 		queue.l.Remove(queue.l.Back())
@@ -82,6 +89,7 @@ func maxSlidingWindow(nums []int, k int) []int {
 }
 
 func TestMaxSlidingWindow(t *testing.T) {
-	fmt.Println(maxSlidingWindow([]int{1, 3, -1, -3, 5, 3, 6, 7}, 3))
-	fmt.Println(maxSlidingWindow([]int{1}, 1))
+	//fmt.Println(maxSlidingWindow([]int{1, 3, -1, -3, 5, 3, 6, 7}, 3))
+	fmt.Println(maxSlidingWindow([]int{1, 3, -1, -3, -4, 3, 6, 7}, 3))
+	//fmt.Println(maxSlidingWindow([]int{1}, 1))
 }
