@@ -1,4 +1,4 @@
-package _7_MonotonicStack
+package _7_monotonicStack
 
 import (
 	"container/list"

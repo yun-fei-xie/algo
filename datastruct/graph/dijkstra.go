@@ -17,7 +17,7 @@ import (
 dijkstra1函数的性能瓶颈在
 */
 func dijkstra1(n int, edges [][]int, weight []int, start int) []int {
-	// 构建图 使用map数组
+	// 构建带权图 使用map数组
 	graph := make([]map[int]int, n+1)
 	for i := 0; i <= n; i++ {
 		graph[i] = make(map[int]int)
