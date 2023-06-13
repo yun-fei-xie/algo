@@ -17,7 +17,8 @@ NumArray(int[] nums) 用整数数组 nums 初始化对象
 void update(int index, int val) 将 nums[index] 的值 更新 为 val
 int sumRange(int left, int right) 返回数组 nums 中索引 left 和索引 right 之间（ 包含 ）的nums元素的 和 （即，nums[left] + nums[left + 1], ..., nums[right]）
 
-方法：树状数组
+方法：树状数组（树状数组求解区间查询问题转化为求解两次前缀和问题）
+方法：线段树
 */
 type NumArray struct {
 	bit []int

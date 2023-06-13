@@ -23,3 +23,17 @@ func TestSegmentTree_Query(t *testing.T) {
 	fmt.Println(q4)
 	fmt.Println(q5)
 }
+
+func TestSegment2(t *testing.T) {
+	arr := []int{0, 1, 2, 3, 4, 5, 6, 7}
+
+	segmentTree := segement_tree.NewSegmentTree(arr, func(i, j int) int {
+		return i + j
+	})
+	fmt.Println(segmentTree.Query(0, 7))
+	fmt.Println(segmentTree.Query(4, 6))
+
+	segmentTree.Update(0, 100)
+	fmt.Println(segmentTree.Query(0, 7))
+
+}

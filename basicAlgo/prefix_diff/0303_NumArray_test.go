@@ -13,7 +13,8 @@ https://leetcode.cn/problems/range-sum-query-immutable/description/
 NumArray(int[] nums) 使用数组 nums 初始化对象
 int sumRange(int i, int j) 返回数组 nums 中索引 left 和 right 之间的元素的 总和 ，包含 left 和 right 两点（也就是 nums[left] + nums[left + 1] + ... + nums[right] )
 
-
+方法：使用前缀和求解区间和问题 前缀和应该是这一题最简单的解法
+方法：使用线段树，使用线段树其实也不难，核心函数就是递归build和递归query
 */
 
 type NumArray struct {
