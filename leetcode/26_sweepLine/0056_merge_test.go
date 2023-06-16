@@ -1,4 +1,4 @@
-package mid
+package _6_sweepLine
 
 import (
 	"fmt"
@@ -23,7 +23,7 @@ https://leetcode.cn/problems/merge-intervals/?favorite=2cktkvj
 如果下一个区间的左边界<=当前区间的右边界（说明有重叠）则更新当前待生成区间的右边界。
 否则的话，一个新的区间生成。
 
-用这种方法去做，需要提前对区间进行排序。
+用这种方法去做，需要提前对区间进行排序。(这本质也是扫描线的思想)
 
 
 */

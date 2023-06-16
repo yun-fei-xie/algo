@@ -1,4 +1,4 @@
-package other
+package _6_sweepLine
 
 import (
 	"fmt"
@@ -43,6 +43,40 @@ func canAttendMeetings(intervals [][]int) bool {
 		begin := intervals[i][0]
 		if begin < intervals[i-1][1] {
 			return false
+		}
+	}
+	return true
+}
+
+// 扫描线算法
+// 套用391数飞机这道题的模板
+
+func canAttendMeetings2(intervals [][]int) bool {
+	points := make([][]int, 0)
+	for _, interval := range intervals {
+		start := []int{interval[0], 1}
+		end := []int{interval[1], -1}
+		points = append(points, start)
+		points = append(points, end)
+	}
+	// 如果两个点时间相等，先散会 再开会
+	sort.Slice(points, func(i, j int) bool {
+		if points[i][0] != points[j][0] {
+			return points[i][0] < points[j][0]
+		} else {
+			return points[i][1] < points[j][1]
+		}
+	})
+	// 一个人再会的场次最多是1
+	var cnt int
+	for i := 0; i < len(points); i++ {
+		if points[i][1] == 1 {
+			cnt++
+			if cnt > 1 {
+				return false
+			}
+		} else {
+			cnt--
 		}
 	}
 	return true

@@ -1,4 +1,4 @@
-package mid
+package _6_sweepLine
 
 import "sort"
 
@@ -33,12 +33,10 @@ intervals = [[0,30],[5,10],[15,20]]
      0----5----10----15----20-----30
 变化 +1   +1    -1    +1    -1    -1
 
-作者：muluo
-链接：https://leetcode.cn/problems/meeting-rooms-ii/solutions/895579/tu-jie-zhuan-hua-wei-shang-xia-che-wen-t-uy2q/
-来源：力扣（LeetCode）
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 这位作者的解法可以理解为，上车就是用会议室，下车就是释放会议室。思路感觉很牛。
+(2023年6月14 回头看 这个思路本质也是扫描线 和252并无差别 现在用一维扫描线做一下
+并且刚刚做了lintCode数飞机这个题，这两个题本质是一个题。会议室最少需要的数量本质就是天上飞机最多的数量)
 
 */
 
@@ -70,4 +68,39 @@ func minMeetingRooms(intervals [][]int) int {
 	}
 	return maxValue
 
+}
+
+/*
+扫描线
+*/
+func minMeetingRooms2(intervals [][]int) int {
+
+	points := make([][]int, 0)
+	for _, interval := range intervals {
+		start := []int{interval[0], 1}
+		end := []int{interval[1], -1}
+		points = append(points, start)
+		points = append(points, end)
+	}
+	// 如果两个点时间相等，先散会 再开会
+	sort.Slice(points, func(i, j int) bool {
+		if points[i][0] != points[j][0] {
+			return points[i][0] < points[j][0]
+		} else {
+			return points[i][1] < points[j][1]
+		}
+	})
+	var ans int = 0
+	var cnt int = 0
+	for i := 0; i < len(points); i++ {
+		if points[i][1] == 1 {
+			cnt++
+		} else {
+			cnt--
+		}
+		if cnt > ans {
+			ans = cnt
+		}
+	}
+	return ans
 }
